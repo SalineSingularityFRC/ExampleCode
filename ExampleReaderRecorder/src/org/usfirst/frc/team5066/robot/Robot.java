@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		js = new Joystick(0);
-		drive = new SingularityDrive(6, 4, 7, 5);
+		drive = new SingularityDrive(6, 5, 7, 4);
 
 		record = true;
 		play = true;
@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		if (play) {
 			try {
-				reader = new Reader("recording.json");
+				reader = new Reader("/home/lvuser/recording.json");
 				initialTime = System.currentTimeMillis();
 			} catch (FileNotFoundException fnfe) {
 				reader = null;
@@ -73,7 +73,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		if (reader != null) {
 			JSONObject current = reader.getDataAtTime(System.currentTimeMillis() - initialTime);
-			drive.mecanum((double) current.get("x"), (double) current.get("y"), (double) current.get("z"));
+			drive.mecanum(Double.parseDouble(current.get("x").toString()), Double.parseDouble(current.get("y").toString()), Double.parseDouble(current.get("z").toString()));
 		}
 	}
 
@@ -81,12 +81,12 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		drive.mecanum(js.getX(), js.getY(), js.getZ(), true);
+		drive.mecanum(js.getRawAxis(0), js.getRawAxis(1), js.getRawAxis(4), true);
 	}
 
 	public void testInit() {
 		if (record) {
-			recorder = new Recorder(new String[] { "x", "y", "z" }, new Object[] { 0, 0, 0 }, "recording.json");
+			recorder = new Recorder(new String[] { "x", "y", "z" }, new Object[] { 0, 0, 0 }, "/home/lvuser/recording.json");
 		}
 	}
 
@@ -95,7 +95,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 		if (recorder != null) {
-			Object[] input = new Object[] { js.getX(), js.getY(), js.getZ() };
+			Object[] input = new Object[] { js.getRawAxis(0), js.getRawAxis(1), js.getRawAxis(4) };
 			
 			drive.mecanum((double) input[0], (double) input[1], (double) input[2]); 
 			recorder.appendData(input);

@@ -8,6 +8,9 @@ import java.util.Date;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+
 /**
  * Class for writing a list of values (in JSON) to a file
  * 
@@ -161,7 +164,7 @@ public class Recorder {
 			return true;
 		} catch (IOException ioe) {
 			bw = null;
-
+			SmartDashboard.putString("asdfasdf", "adlfaksljdf");
 			return false;
 		}
 
