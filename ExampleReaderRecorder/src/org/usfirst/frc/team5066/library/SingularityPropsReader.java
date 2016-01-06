@@ -4,12 +4,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class SingularityReader { 
+public class SingularityPropsReader { 
+	
+	//each SingularityPropsReader object is associated with one properties file.
 	
 	private Properties props;
 	private String propFileURL;
 	
-	public SingularityReader(String propFileURL) throws IOException {
+	public SingularityPropsReader(String propFileURL) throws IOException {
 		propFileURL = this.propFileURL;
 		props = readProperties(propFileURL);
 	}
@@ -38,5 +40,24 @@ public class SingularityReader {
 		//TODO save the file
 		reloadProperties();
 	}
+	
+	//getProperty methods
+	
+	public int getInt(String name) {
+		return Integer.parseInt(props.getProperty("name"));
+	}
+	
+	public float getFloat(String name) {
+		return Float.parseFloat(props.getProperty("name"));
+	}
+	
+	public double getDouble(String name) {
+		return Double.parseDouble(props.getProperty("name"));
+	}
+	
+	public String getString(String name) {
+		return props.getProperty("name");
+	}
+	
 	
 }
