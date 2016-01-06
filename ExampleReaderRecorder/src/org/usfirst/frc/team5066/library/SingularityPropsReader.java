@@ -40,6 +40,8 @@ public class SingularityPropsReader {
 		return prop;
 	}
 	
+	//setProperty method
+	
 	public void setProperty(String propName, Object o) throws IOException{
 		
 		//TODO test to see if this works
@@ -67,6 +69,10 @@ public class SingularityPropsReader {
 	
 	public String getString(String name) {
 		return props.getProperty("name");
+	}
+	
+	public boolean getBoolean(String name) {
+		return Boolean.parseBoolean(props.getProperty("name"));
 	}
 	
 	
