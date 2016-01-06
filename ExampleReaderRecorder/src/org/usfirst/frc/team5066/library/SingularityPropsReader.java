@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5066.library;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -14,6 +15,10 @@ public class SingularityPropsReader {
 	public SingularityPropsReader(String propFileURL) throws IOException {
 		propFileURL = this.propFileURL;
 		props = readProperties(propFileURL);
+	}
+	
+	public String getFileURL() {
+		return propFileURL;
 	}
 	
 	public void reloadProperties() throws IOException {
@@ -36,8 +41,13 @@ public class SingularityPropsReader {
 	}
 	
 	public void setProperty(String propName, Object o) throws IOException{
+		
+		//TODO test to see if this works
+		
+		FileOutputStream out = new FileOutputStream(propFileURL);
 		props.setProperty(propName, o.toString());
-		//TODO save the file
+		props.store(out, null);
+		out.close();
 		reloadProperties();
 	}
 	
